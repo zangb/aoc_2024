@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <filesystem>
@@ -242,8 +243,20 @@ int main(int argc, char** argv) {
         return 1;
     }
     std::vector<std::vector<uint64_t>> input = get_input(argv[1]);
+    std::chrono::time_point<std::chrono::high_resolution_clock> start =
+        std::chrono::high_resolution_clock::now();
     stage_1_solver solver_1 {};
-    std::cout << "Stage 1: Total calibration result: " << solver_1.solve(input) << "\n";
+    const auto stage_1_result = solver_1.solve(input);
+    const auto t_stage_1 = std::chrono::duration_cast<std::chrono::microseconds>(
+        std::chrono::high_resolution_clock::now() - start);
+
+    start = std::chrono::high_resolution_clock::now();
     stage_2_solver solver_2 {};
-    std::cout << "Stage 2: Total calibration result: " << solver_2.solve(input) << "\n";
+    const auto stage_2_result = solver_2.solve(input);
+    const auto t_stage_2 = std::chrono::duration_cast<std::chrono::microseconds>(
+        std::chrono::high_resolution_clock::now() - start);
+    std::cout << std::format(
+        "Stage 1: Total calibration result: {} took {} us\n", stage_1_result, t_stage_1);
+    std::cout << std::format(
+        "Stage 2: Total calibration result: {} took {} us\n", stage_2_result, t_stage_2);
 }
