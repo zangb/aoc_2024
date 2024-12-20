@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.29)
 
-project("" LANGUAGES CXX)
+project("day_9" LANGUAGES CXX)
 
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
